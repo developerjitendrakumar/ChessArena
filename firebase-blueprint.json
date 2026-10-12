@@ -1,0 +1,112 @@
+{
+  "entities": {
+    "User": {
+      "title": "User Profile",
+      "description": "User profile and statistics",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string" },
+        "username": { "type": "string" },
+        "email": { "type": "string" },
+        "rating": { "type": "number" },
+        "gamesPlayed": { "type": "number" },
+        "wins": { "type": "number" },
+        "losses": { "type": "number" },
+        "draws": { "type": "number" },
+        "fairPlayScore": { "type": "number" },
+        "chatWarnings": { "type": "number" },
+        "banned": { "type": "boolean" },
+        "isAdmin": { "type": "boolean" },
+        "title": { "type": "string" },
+        "badges": { "type": "array" },
+        "location": { "type": "object", "properties": { "lat": { "type": "number" }, "lng": { "type": "number" }, "city": { "type": "string" } } },
+        "lastLoginAt": { "type": "string", "format": "date-time" },
+        "totalPlayTime": { "type": "number", "description": "Total play time in seconds" },
+        "isOnline": { "type": "boolean" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["uid", "username", "email"]
+    },
+    "Game": {
+      "title": "Chess Game",
+      "description": "Records of played games",
+      "type": "object",
+      "properties": {
+        "white": { "type": "object" },
+        "black": { "type": "object" },
+        "fen": { "type": "string" },
+        "pgn": { "type": "string" },
+        "status": { "type": "string" },
+        "winner": { "type": "string" },
+        "timeControl": { "type": "string" },
+        "reason": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      }
+    },
+    "Report": {
+      "title": "Abuse Report",
+      "description": "Reports for chat or voice abuse",
+      "type": "object",
+      "properties": {
+        "reporterId": { "type": "string" },
+        "reportedUserId": { "type": "string" },
+        "reportedUsername": { "type": "string" },
+        "reason": { "type": "string" },
+        "type": { "type": "string", "enum": ["chat", "voice"] },
+        "evidence": { "type": "string", "description": "Base64 audio or chat transcript" },
+        "status": { "type": "string", "enum": ["pending", "resolved", "dismissed"] },
+        "createdAt": { "type": "string", "format": "date-time" }
+      }
+    },
+    "Tournament": {
+      "title": "Tournament",
+      "description": "Chess tournaments",
+      "type": "object",
+      "properties": {
+        "title": { "type": "string" },
+        "type": { "type": "string" },
+        "prize": { "type": "string" },
+        "participants": { "type": "array" },
+        "status": { "type": "string", "enum": ["upcoming", "registering", "active", "completed"] },
+        "startTime": { "type": "string", "format": "date-time" },
+        "createdBy": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      }
+    },
+    "TournamentAlert": {
+      "title": "Tournament Alert",
+      "description": "User requests for tournament notifications",
+      "type": "object",
+      "properties": {
+        "tournamentId": { "type": "string" },
+        "userId": { "type": "string" },
+        "userEmail": { "type": "string" },
+        "notified": { "type": "boolean" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["tournamentId", "userId"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "User",
+      "description": "User profiles"
+    },
+    "/games/{gameId}": {
+      "schema": "Game",
+      "description": "Match history"
+    },
+    "/reports/{reportId}": {
+      "schema": "Report",
+      "description": "Abuse reports"
+    },
+    "/tournaments/{tournamentId}": {
+      "schema": "Tournament",
+      "description": "Official tournaments"
+    },
+    "/tournament_alerts/{alertId}": {
+      "schema": "TournamentAlert",
+      "description": "User notification requests"
+    }
+  }
+}

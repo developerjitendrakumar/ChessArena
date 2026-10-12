@@ -1,0 +1,11 @@
+{
+  "name": "ChessArena",
+  "description": "Professional online chess platform with real-time multiplayer, WebRTC voice chat, and AI analysis.",
+  "requestFramePermissions": [
+    "microphone",
+    "geolocation"
+  ],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
